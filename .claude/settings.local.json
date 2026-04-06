@@ -3,7 +3,9 @@
     "allow": [
       "Bash(npm -v)",
       "Bash(cp -r temp-setup/. /c/Users/masud/Documents/reverse_tweets/)",
-      "Bash(rm -rf temp-setup)"
+      "Bash(rm -rf temp-setup)",
+      "Bash(ls -la *.env* .env*)",
+      "Bash(ls -la C:\\\\Users\\\\masud\\\\Documents\\\\reverse_tweets\\\\*.env*)"
     ]
   }
 }
