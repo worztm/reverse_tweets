@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm -v)",
+      "Bash(cp -r temp-setup/. /c/Users/masud/Documents/reverse_tweets/)",
+      "Bash(rm -rf temp-setup)"
+    ]
+  }
+}
