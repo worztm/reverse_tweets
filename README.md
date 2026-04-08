@@ -1,6 +1,6 @@
 # TweetsReverse.lol
 
-<video src="https://raw.githubusercontent.com/worztm/reverse_tweets/main/my%20intro.mp4" controls autoplay muted loop></video>
+<video src="public/my intro.mp4" controls autoplay muted loop></video>
 
 Paste a tweet. Get it roasted, reversed, and ridiculously remixed.
 
