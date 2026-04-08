@@ -41,7 +41,7 @@ Only output valid JSON. No extra text, no markdown backticks.`;
         'X-Title': 'TweetsReverse.lol',
       },
       body: JSON.stringify({
-        model: 'z-ai/glm-4.5-air:free',
+        model: 'openai/gpt-oss-120b:free',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: `Reverse/roast this tweet: "${tweet.trim()}"` },
