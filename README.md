@@ -1,5 +1,7 @@
 # TweetsReverse.lol
 
+<video src="https://raw.githubusercontent.com/worztm/reverse_tweets/main/my%20intro.mp4" controls autoplay muted loop></video>
+
 Paste a tweet. Get it roasted, reversed, and ridiculously remixed.
 
 **[TweetsReverse.lol](https://tweetsreverse.lol)** is an AI-powered tweet roasting app. Drop any tweet into the input, hit "Reverse it," and the backend generates multiple roast variations in different styles — Sarcastic, Dark Humor, Absurd, Witty, and Self-Deprecating — each with a roast-level score.
