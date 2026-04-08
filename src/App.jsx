@@ -187,24 +187,52 @@ function App() {
         }}
       />
 
-      <div className="relative z-10 max-w-xl mx-auto w-full px-5 py-10">
+      <div className="relative z-10 max-w-xl mx-auto w-full px-5 py-4 flex flex-col flex-1">
+        {/* Top Right Links */}
+        <div className="flex justify-end items-center gap-3 mb-4">
+          <a
+            href="https://github.com/worztm/reverse_tweets"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-text-muted hover:text-text-primary transition-colors flex items-center gap-1 text-sm"
+            aria-label="View source on GitHub"
+          >
+            <svg className="w-5 h-5" viewBox="0 0 19 19">
+              <path fill="currentColor" fillRule="evenodd" d="M9.356 1.85C5.05 1.85 1.57 5.356 1.57 9.694a7.84 7.84 0 0 0 5.324 7.44c.387.079.528-.168.528-.376 0-.182-.013-.805-.013-1.454-2.165.467-2.616-.935-2.616-.935-.349-.91-.864-1.143-.864-1.143-.71-.48.051-.48.051-.48.787.051 1.2.805 1.2.805.695 1.194 1.817.857 2.268.649.064-.507.27-.857.49-1.052-1.728-.182-3.545-.857-3.545-3.87 0-.857.31-1.558.8-2.104-.078-.195-.349-1 .077-2.078 0 0 .657-.208 2.14.805a7.5 7.5 0 0 1 1.946-.26c.657 0 1.328.092 1.946.26 1.483-1.013 2.14-.805 2.14-.805.426 1.078.155 1.883.078 2.078.502.546.799 1.247.799 2.104 0 3.013-1.818 3.675-3.558 3.87.284.247.528.714.528 1.454 0 1.052-.012 1.896-.012 2.156 0 .208.142.455.528.377a7.84 7.84 0 0 0 5.324-7.441c.013-4.338-3.48-7.844-7.773-7.844" clipRule="evenodd"/>
+            </svg>
+            <span className="text-xs">↗</span>
+          </a>
+          <a
+            href="https://x.com/worztm"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-text-muted hover:text-text-primary transition-colors flex items-center gap-1 text-sm"
+            aria-label="Follow on X (Twitter)"
+          >
+            <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg>
+            <span className="text-xs">↗</span>
+          </a>
+        </div>
+
         {/* Header */}
-        <header className="text-center mb-10">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-none">
+        <header className="text-center mb-6">
+          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight leading-none">
             <span className="text-text-primary">Tweets</span>
             <span className="text-accent">Reverse</span>
             <span className="text-gold">.lol</span>
           </h1>
-          <p className="text-text-secondary text-sm mt-2 italic font-serif">
+          <p className="text-text-secondary text-sm mt-1.5 italic font-serif">
             Paste a tweet. Get it roasted, reversed, and ridiculously remixed.
           </p>
-          <div className="mt-4 flex justify-center">
+          <div className="mt-3 flex justify-center">
             <div className="w-12 h-[2px] bg-accent rounded-full" />
           </div>
         </header>
 
         {/* Tweet Input */}
-        <div className="mb-5">
+        <div className="mb-4">
           <label className="text-[10px] uppercase tracking-[1.5px] text-text-muted font-semibold mb-2 block">
             The Tweet
           </label>
@@ -235,7 +263,7 @@ function App() {
         <button
           onClick={handleRoast}
           disabled={!tweet.trim() || loading}
-          className="w-full py-3.5 rounded-lg bg-accent text-white font-semibold text-[13px] uppercase tracking-[0.8px] transition-all duration-250 hover:bg-accent-hover hover:-translate-y-[1px] hover:shadow-lg hover:shadow-accent/25 active:translate-y-0 active:scale-[0.99] disabled:opacity-30 disabled:cursor-not-allowed disabled:transform-none"
+          className="w-full py-3 rounded-lg bg-accent text-white font-semibold text-[13px] uppercase tracking-[0.8px] transition-all duration-250 hover:bg-accent-hover hover:-translate-y-[1px] hover:shadow-lg hover:shadow-accent/25 active:translate-y-0 active:scale-[0.99] disabled:opacity-30 disabled:cursor-not-allowed disabled:transform-none"
         >
           {loading ? "Generating..." : tweet.trim() ? "Reverse it" : "Paste a tweet to start"}
         </button>
@@ -245,8 +273,8 @@ function App() {
 
         {/* Results */}
         {results && results.length > 0 && (
-          <div className="mt-8">
-            <div className="flex items-center justify-between mb-4">
+          <div className="mt-6">
+            <div className="flex items-center justify-between mb-3">
               <h2 className="text-lg font-bold text-text-primary tracking-tight">
                 Results
               </h2>
@@ -254,7 +282,7 @@ function App() {
                 {results.length} variations
               </span>
             </div>
-            <div className="h-[1px] bg-gradient-to-r from-transparent via-border to-transparent mb-4" />
+            <div className="h-[1px] bg-gradient-to-r from-transparent via-border to-transparent mb-3" />
             <div className="space-y-3">
               {results.map((r, i) => (
                 <ResultCard key={i} result={r} index={i} />
@@ -265,9 +293,9 @@ function App() {
 
         {/* Empty State */}
         {!results && !loading && (
-          <div className="text-center py-16 animate-fade-in">
-            <div className="text-4xl mb-4 opacity-40">"</div>
-            <h3 className="text-xl font-bold text-text-secondary/80 mb-2 tracking-tight">
+          <div className="text-center py-10 animate-fade-in flex-1 flex flex-col justify-center">
+            <div className="text-3xl mb-3 opacity-40">"</div>
+            <h3 className="text-lg font-bold text-text-secondary/80 mb-2 tracking-tight">
               Drop a tweet above
             </h3>
             <p className="text-text-muted text-sm max-w-[260px] mx-auto leading-relaxed">
@@ -277,17 +305,10 @@ function App() {
         )}
 
         {/* Footer */}
-        <footer className="text-center mt-16 pt-10 border-t border-border-subtle">
-          <a
-            href="https://x.com/worztm"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block mt-3 text-text-muted hover:text-white transition-colors"
-          >
-            <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" aria-label="X (Twitter)">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-            </svg>
-          </a>
+        <footer className="text-center mt-auto pt-6 border-t border-border-subtle">
+          <p className="text-text-muted text-xs">
+            Built by <a href="https://x.com/worztm" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">@worztm</a>
+          </p>
         </footer>
       </div>
     </div>

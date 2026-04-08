@@ -41,7 +41,7 @@ Only output valid JSON. No extra text, no markdown backticks.`;
         'X-Title': 'TweetsReverse.lol',
       },
       body: JSON.stringify({
-        model: 'nvidia/nemotron-3-super-120b-a12b:free',
+        model: 'openrouter/free',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: `Reverse/roast this tweet: "${tweet.trim()}"` },
