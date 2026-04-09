@@ -499,18 +499,7 @@ function App() {
               </a>
             </p>
             <div className="flex gap-4">
-              <span
-                className="text-[11px]"
-                style={{ color: 'var(--color-text-muted)', cursor: 'default' }}
-              >
-                privacy
-              </span>
-              <span
-                className="text-[11px]"
-                style={{ color: 'var(--color-text-muted)', cursor: 'default' }}
-              >
-                terms
-              </span>
+             
             </div>
           </div>
         </AnimateOnScroll>
