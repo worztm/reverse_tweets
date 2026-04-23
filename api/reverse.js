@@ -1,3 +1,15 @@
+const activeRequests = new Set();
+
+function getUserRequestKey(req) {
+  const forwardedFor = req.headers['x-forwarded-for'];
+  const ip = Array.isArray(forwardedFor)
+    ? forwardedFor[0]
+    : forwardedFor?.split(',')[0]?.trim();
+  const clientId = req.headers['x-client-id'];
+
+  return clientId || ip || req.socket?.remoteAddress || 'anonymous';
+}
+
 export default async function handler(req, res) {
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) {
@@ -11,6 +23,13 @@ export default async function handler(req, res) {
   const { tweet } = req.body;
   if (!tweet || !tweet.trim()) {
     return res.status(400).json({ error: 'No tweet provided' });
+  }
+
+  const userKey = getUserRequestKey(req);
+  if (activeRequests.has(userKey)) {
+    return res.status(429).json({
+      error: 'You already have a request in progress. Please wait for it to finish.',
+    });
   }
 
   const systemPrompt = `You are a hilarious, sharp-tongued tweet reverser/roast bot on TweetsReverse.lol. When a user pastes a tweet, you reverse/roast it with comedy. Your job is to take the tweet and flip it, mock it, roast it, or give a hilariously brutal counter-take.
@@ -32,6 +51,8 @@ Rules:
 Only output valid JSON. No extra text, no markdown backticks.`;
 
   try {
+    activeRequests.add(userKey);
+
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -58,7 +79,9 @@ Only output valid JSON. No extra text, no markdown backticks.`;
 
     const data = await response.json();
     res.status(200).json(data);
-  } catch (e) {
+  } catch {
     res.status(500).json({ error: 'Internal server error' });
+  } finally {
+    activeRequests.delete(userKey);
   }
 }

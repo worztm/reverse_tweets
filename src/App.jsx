@@ -19,6 +19,19 @@ const STYLE_CONFIG = {
   "Self-Deprecating": { bg: "var(--color-canvas-warm)", text: "var(--color-text-secondary)" },
 };
 
+function getClientId() {
+  const storageKey = 'tweetsreverse-client-id';
+  const existingId = window.localStorage.getItem(storageKey);
+
+  if (existingId) {
+    return existingId;
+  }
+
+  const nextId = window.crypto?.randomUUID?.() || `client-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  window.localStorage.setItem(storageKey, nextId);
+  return nextId;
+}
+
 /* ─── Components ─── */
 
 function LoadingDots() {
@@ -164,6 +177,7 @@ function App() {
   const [error, setError] = useState('');
   const [placeholderIdx, setPlaceholderIdx] = useState(0);
   const textareaRef = useRef(null);
+  const clientIdRef = useRef('');
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -172,8 +186,12 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    clientIdRef.current = getClientId();
+  }, []);
+
   const handleRoast = useCallback(async () => {
-    if (!tweet.trim()) return;
+    if (!tweet.trim() || loading) return;
     setError('');
     setLoading(true);
     setResults(null);
@@ -181,7 +199,10 @@ function App() {
     try {
       const res = await fetch(API_ENDPOINT, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Client-Id': clientIdRef.current || getClientId(),
+        },
         body: JSON.stringify({ tweet: tweet.trim() }),
       });
 
@@ -211,7 +232,7 @@ function App() {
     } finally {
       setLoading(false);
     }
-  }, [tweet]);
+  }, [loading, tweet]);
 
   const charCount = tweet.length;
   const charColor = charCount > 280 ? 'var(--color-status-red-text)' : charCount > 240 ? 'var(--color-status-yellow-text)' : 'var(--color-text-muted)';
