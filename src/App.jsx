@@ -75,10 +75,10 @@ function ResultCard({ result, index }) {
         padding: '28px',
       }}
     >
-      <div className="flex items-start justify-between mb-5">
-        <div className="flex flex-col gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-5 gap-3 sm:gap-0">
+        <div className="flex flex-col gap-3 order-2 sm:order-1">
           <span
-            className="text-[11px] font-bold tracking-wider px-3 py-1.5 uppercase"
+            className="result-style-badge text-[11px] font-bold tracking-wider px-3 py-1.5 uppercase"
             style={{
               backgroundColor: config.bg,
               color: config.text,
@@ -91,7 +91,7 @@ function ResultCard({ result, index }) {
             {result.style}
           </span>
           <p
-            className="text-[16px] leading-[1.7] text-pretty"
+            className="result-text text-[16px] leading-[1.7] text-pretty"
             style={{
               color: 'var(--color-text-primary)',
               maxWidth: '52ch',
@@ -101,7 +101,7 @@ function ResultCard({ result, index }) {
           </p>
         </div>
         <span
-          className="text-4xl italic leading-none ml-4 flex-shrink-0 tabular-nums font-bold"
+          className="result-number text-4xl italic leading-none sm:ml-4 flex-shrink-0 tabular-nums font-bold order-1 sm:order-2 self-end sm:self-auto"
           style={{
             fontFamily: 'var(--font-serif)',
             color: 'var(--color-border)',
@@ -392,10 +392,11 @@ function App() {
       <div className="flex-1 flex flex-col relative z-10 h-screen overflow-y-auto">
         
         {/* Mobile Header */}
-        <div className="lg:hidden p-4 flex items-center justify-between glass sticky top-0 z-30">
+        <div className="lg:hidden flex items-center justify-between glass sticky top-0 z-30 px-4 py-3" style={{ paddingTop: 'calc(env(safe-area-inset-top) + 12px)' }}>
           <button 
             onClick={() => setIsSidebarOpen(true)}
-            className="p-2 rounded-md bg-[rgba(255,255,255,0.05)] hover:bg-[rgba(255,255,255,0.1)] transition-colors"
+            className="p-2 rounded-md bg-[rgba(255,255,255,0.05)] transition-colors"
+            style={{ minWidth: 44, minHeight: 44 }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
           </button>
@@ -441,15 +442,15 @@ function App() {
           </nav>
         </div>
 
-        <div className="max-w-3xl mx-auto w-full px-5 sm:px-8 py-10 lg:py-6 flex flex-col flex-1">
+        <div className="max-w-3xl mx-auto w-full px-4 sm:px-8 py-6 sm:py-10 lg:py-6 flex flex-col flex-1">
 
           {/* Header */}
-          <AnimateOnScroll as="header" className="mb-16 mt-4 lg:mt-0">
+          <AnimateOnScroll as="header" className="mb-10 sm:mb-16 mt-4 lg:mt-0">
             <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
               <h1
-                className="text-6xl md:text-8xl font-bold leading-[1.1] text-balance font-serif"
+                className="text-4xl sm:text-6xl md:text-8xl font-bold leading-[1.1] text-balance font-serif"
                 style={{
-                  letterSpacing: '-0.04em',
+                  letterSpacing: '-0.03em',
                 }}
               >
                 <span className="text-white">Tweets</span>
@@ -457,7 +458,7 @@ function App() {
                 <span style={{ color: 'var(--color-accent-warm)' }}>.lol</span>
               </h1>
               <p
-                className="text-lg mt-6 leading-relaxed text-pretty font-serif"
+                className="text-base sm:text-lg mt-4 sm:mt-6 leading-relaxed text-pretty font-serif"
                 style={{
                   color: 'var(--color-text-secondary)',
                   maxWidth: '48ch',
@@ -487,18 +488,23 @@ function App() {
                     style={{ minHeight: '120px' }}
                   />
                   
-                  <div className="flex justify-between items-center p-3 border-t border-[rgba(255,255,255,0.05)]">
-                    <span className="text-[12px] font-mono font-medium" style={{ color: charColor }}>
-                      {charCount}/280
-                    </span>
-                    <div className="flex items-center gap-4">
+                  <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center p-3 border-t border-[rgba(255,255,255,0.05)] gap-2 sm:gap-0">
+                    <div className="flex items-center justify-between sm:justify-start">
+                      <span className="text-[12px] font-mono font-medium" style={{ color: charColor }}>
+                        {charCount}/280
+                      </span>
+                      <span className="text-[11px] sm:hidden inline-flex items-center gap-1" style={{ color: 'var(--color-text-muted)' }}>
+                        <kbd className="px-1.5 py-0.5 text-[10px]">⌘</kbd><span className="text-[10px]">+</span><kbd className="px-1.5 py-0.5 text-[10px]">↵</kbd>
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-3 sm:gap-4">
                       <span className="text-[11px] hidden sm:inline-flex items-center gap-1.5" style={{ color: 'var(--color-text-muted)' }}>
                         <kbd>Cmd</kbd> <span>+</span> <kbd>Enter</kbd>
                       </span>
                       <button
                         onClick={handleRoast}
                         disabled={!tweet.trim() || loading}
-                        className="px-6 py-2.5 rounded-lg font-bold text-[13px] uppercase tracking-widest btn-primary shadow-lg"
+                        className="flex-1 sm:flex-none px-5 sm:px-6 py-2.5 rounded-lg font-bold text-[13px] uppercase tracking-widest btn-primary shadow-lg"
                         style={{
                           background: 'linear-gradient(135deg, var(--color-accent-warm), #0ea5e9)',
                           color: '#FFFFFF',
@@ -535,21 +541,21 @@ function App() {
 
             {/* Results */}
             {activeResults && activeResults.length > 0 && !loading && (
-              <AnimateOnScroll as="div" className="mt-16 pb-20">
-                <div className="flex items-end justify-between mb-8">
+              <AnimateOnScroll as="div" className="mt-10 sm:mt-16 pb-16 sm:pb-20">
+                <div className="flex items-end justify-between mb-6 sm:mb-8">
                   <div>
                     <h2
-                      className="text-3xl font-bold tracking-tight text-balance font-serif text-gradient"
+                      className="text-2xl sm:text-3xl font-bold tracking-tight text-balance font-serif text-gradient"
                     >
                       Remixed Results
                     </h2>
-                    <p className="text-sm mt-2 font-medium" style={{ color: 'var(--color-text-muted)' }}>
+                    <p className="text-xs sm:text-sm mt-1 sm:mt-2 font-medium" style={{ color: 'var(--color-text-muted)' }}>
                       {activeResults.length} variations generated perfectly for you.
                     </p>
                   </div>
                 </div>
                 
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
                   {activeResults.map((r, i) => (
                     <ResultCard key={i} result={r} index={i} />
                   ))}
@@ -561,17 +567,17 @@ function App() {
             {!activeResults && !loading && (
               <AnimateOnScroll
                 as="div"
-                className="text-center py-20 animate-fade-in flex-1 flex flex-col justify-center items-center"
+                className="text-center py-12 sm:py-20 animate-fade-in flex-1 flex flex-col justify-center items-center"
               >
                 <div
-                  className="w-20 h-20 mb-8 flex items-center justify-center glass shadow-2xl relative"
+                  className="w-16 sm:w-20 h-16 sm:h-20 mb-6 sm:mb-8 flex items-center justify-center glass shadow-2xl relative"
                   style={{
                     borderRadius: 'var(--radius-xl)',
                   }}
                 >
                   <div className="absolute inset-0 rounded-[24px] bg-gradient-to-tr from-[rgba(59,130,246,0.2)] to-[rgba(14,165,233,0.2)] blur-xl pointer-events-none" />
                   <svg
-                    className="w-10 h-10 relative z-10"
+                    className="w-8 sm:w-10 h-8 sm:h-10 relative z-10"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="url(#grad)"
@@ -590,7 +596,7 @@ function App() {
                   </svg>
                 </div>
                 <h3
-                  className="text-2xl font-bold mb-3 tracking-tight font-serif"
+                  className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 tracking-tight font-serif"
                   style={{
                     color: 'var(--color-text-primary)',
                   }}
@@ -598,7 +604,7 @@ function App() {
                   Drop a masterpiece above
                 </h3>
                 <p
-                  className="text-base max-w-[320px] mx-auto leading-relaxed text-pretty font-medium"
+                  className="text-sm sm:text-base max-w-[280px] sm:max-w-[320px] mx-auto leading-relaxed text-pretty font-medium"
                   style={{ color: 'var(--color-text-muted)' }}
                 >
                   Paste any tweet, yours or someone else's, and let the AI roast it to perfection.
